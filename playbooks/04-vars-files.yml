@@ -1,0 +1,9 @@
+- name: Demo on vars_files
+  hosts: all
+  vars_files:
+    - vars.yml
+  tasks:
+    - name: Access file from a file 
+      debug:
+        msg: "URL = {{URL}}"
+        

@@ -1,0 +1,16 @@
+- name: Test Play1
+  hosts: all
+  tasks:
+    - name: Check Ping
+      ping: 
+
+- name: Test Play2
+  hosts: all
+  tasks:
+    - name: Check Ping
+      ping: 
+
+    - name: Create some sample file 
+      file:
+        path: /tmp/foo.conf
+        state: touch

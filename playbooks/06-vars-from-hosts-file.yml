@@ -1,0 +1,7 @@
+- name: Accessing variables from hosts file
+  hosts: all
+  tasks:
+    - name: Access variable from hosts file 
+      debug:
+        msg: "URL = {{URL}}"
+        

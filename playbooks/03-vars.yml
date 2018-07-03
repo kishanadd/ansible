@@ -1,0 +1,17 @@
+- name: Demo on vars
+  hosts: all
+  vars:
+   URL: playbook.google.com
+  tasks:
+    - name: Print URL 
+      debug: 
+        msg: "URL = {{URL}}"
+
+    - name: Define and access variable at task level
+      vars:
+        URL: task.google.com
+      debug:
+        msg: "URL = {{URL}}"
+
+
+

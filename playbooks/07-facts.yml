@@ -1,0 +1,8 @@
+- name: Print Facts
+  hosts: all
+  #gather_facts: no     
+  #You can disable the facts collection by enabling above line
+  tasks: 
+    - name: Print fact 
+      debug:
+        msg: "OS Family = {{ansible_os_family}}"

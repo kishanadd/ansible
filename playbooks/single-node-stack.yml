@@ -1,0 +1,35 @@
+---
+- name: Setup DB Server
+  hosts: all 
+  become: yes
+  tasks:
+    - name: Install MariaDB Server 
+      package:
+        name: mariadb-server
+        state: installed
+
+    - name: Install MySQL-Python Module 
+      package:
+        name: MySQL-python
+        state: installed
+
+    - name: Start MariaDB Service
+      service:
+        name: mariadb 
+        state: started
+        enabled: yes
+
+    - name: Copy Student.sql file 
+      copy:
+        src: student.sql
+        dest: /tmp/student.sql 
+
+    - name: Load the SQL Schema
+      mysql_db:
+        state: import
+        name: all
+        target: /tmp/student.sql
+
+- name: Setup Application Server 
+  hosts: all
+  

@@ -1,0 +1,8 @@
+- name: Demo on when statement
+  hosts: all
+
+  tasks:
+    - name: Check the OS 
+      shell: exit 1 
+      when: ansible_os_family != "RedHat"
+      

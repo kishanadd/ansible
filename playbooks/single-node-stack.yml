@@ -2,16 +2,15 @@
 - name: Setup DB Server
   hosts: all 
   become: yes
+  tags: DB
   tasks:
-    - name: Install MariaDB Server 
+    - name: Install MariaDB Server and Packages
       package:
-        name: mariadb-server
+        name: "{{ item }}"
         state: installed
-
-    - name: Install MySQL-Python Module 
-      package:
-        name: MySQL-python
-        state: installed
+      loop:
+        - mariadb-server
+        - MySQL-python
 
     - name: Start MariaDB Service
       service:
@@ -32,4 +31,43 @@
 
 - name: Setup Application Server 
   hosts: all
-  
+  become: yes
+  tags: APP 
+  vars:
+    TOMCAT_URL: http://www-us.apache.org/dist/tomcat/tomcat-9/v9.0.10/bin/apache-tomcat-9.0.10.tar.gz
+  tasks:
+    - name: Install Java 
+      package: 
+        name: java
+        state: installed
+
+    - name: Get the tomcat directory 
+      shell: echo "{{TOMCAT_URL}}" |awk -F / '{print $NF}' | sed -e 's/.tar.gz//'
+      register: out 
+
+    - set_fact:
+        TOMCAT_DIR: "{{out.stdout}}"
+
+#    - name: Download tomcat
+#      get_url:
+#        url: "{{TOMCAT_URL}}"
+#        dest: "/opt/{{TARFILE.stdout}}"
+
+    - name: Download and extract tomcat
+      unarchive:
+        src: "{{TOMCAT_URL}}"
+        dest: /opt 
+        remote_src: yes
+
+    - name: Find list of files and directories in webapps
+      find:
+        file_type: any
+        paths: "/opt/{{TOMCAT_DIR}}/webapps"
+      register: out
+
+    - name: Remove the files in webapps
+      file:
+        path: "{{item.path}}"
+        state: absent
+      loop: "{{out.files}}"
+      

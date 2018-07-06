@@ -1,0 +1,19 @@
+- name: Demo of tags on tasks
+  hosts: all
+  tasks:
+    - debug:
+        msg: "DB"
+      tags: 
+        - DB 
+
+    - debug:
+        msg: "APP"
+      tags: 
+        - APP 
+
+    - debug:
+        msg: "WEB"
+      tags: 
+        - WEB 
+        
+     

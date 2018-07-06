@@ -1,0 +1,24 @@
+- name: Demo on tags1
+  hosts: all
+  tags:
+    - DB 
+  tasks:
+    - debug:
+        msg: "DB"
+
+
+- name: Demo on tags2
+  hosts: all
+  tags:
+    - APP 
+  tasks:
+    - debug:
+        msg: "APP"
+
+- name: Demo on tags3
+  hosts: all
+  tags:
+    - WEB
+  tasks:
+    - debug:
+        msg: "WEB"

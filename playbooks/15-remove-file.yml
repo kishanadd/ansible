@@ -1,0 +1,8 @@
+- name: Remove files
+  hosts: all
+  become: yes
+  tasks: 
+    - name: Remove a file 
+      file:
+        path: /tmp/sample
+        state: absent

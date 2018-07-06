@@ -1,0 +1,13 @@
+- name: set_facts in between tasks
+  hosts: all
+  tasks:
+    - name: run some command
+      shell: who | wc -l
+      register: out
+
+    - set_fact:
+        USERS: "{{out.stdout}}"
+
+    - debug:
+        msg: "Number of Users logged in = {{USERS}}"
+        

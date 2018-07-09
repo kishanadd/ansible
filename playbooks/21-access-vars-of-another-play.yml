@@ -1,0 +1,17 @@
+- name: Demo on access the variables of another play
+  hosts: DBNODES
+  gather_facts: yes
+  tasks: 
+    - name: set a fact
+      set_fact:
+        DBIP: "{{facter_ipaddress}}"
+
+  
+- name: Access vars from previous play
+  hosts:  APPNODES
+  tasks: 
+    - debug: 
+        #msg: "{{hostvars[groups['DBNODES'][0]]['DBIP']}}"
+        msg: "{{hostvars[item]['DBIP']}}"
+      with_items: "{{ groups['DBNODES'] }}"
+

@@ -1,1 +1,6 @@
-test
+[DBNODES]
+dbnode
+
+[APPNODES]
+appnode1
+appnode2

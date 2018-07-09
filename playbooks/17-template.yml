@@ -1,0 +1,14 @@
+- name: Template example
+  hosts: all
+  gather_facts: yes
+  tasks:
+    - name: Template example
+      template:
+        src: sample.conf
+        dest: /tmp/sample.conf
+
+    - name: Template context.xml example
+      template:
+        src: context.xml.j2
+        dest: /tmp/context.xml
+        

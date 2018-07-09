@@ -1,0 +1,9 @@
+- name: Block in file to edit the configuration file
+  hosts: all
+  gather_facts: yes
+  tasks:
+    - blockinfile:
+        path: /tmp/context.xml
+        marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+        block: <Resource name="jdbc/TestDB" auth="Container" type="javax.sql.DataSource" maxActive="50" maxIdle="30" maxWait="10000" username="student" password="student@1" driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://{{facter_ipaddress}}:3306/studentapp"/>
+        insertbefore: '</Context>'

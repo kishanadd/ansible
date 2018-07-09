@@ -1,7 +1,8 @@
 ---
 - name: Setup DB Server
-  hosts: all 
+  hosts: DBNODES 
   become: yes
+  gather_facts: yes
   tags: DB
   tasks:
     - name: Install MariaDB Server and Packages
@@ -28,9 +29,13 @@
         state: import
         name: all
         target: /tmp/student.sql
+    
+    - name: Define IP addres variables
+      set_fact:
+        DBIP: "{{facter_ipaddress}}"
 
 - name: Setup Application Server 
-  hosts: all
+  hosts: APPNODES
   become: yes
   gather_facts: true
   tags: APP 
@@ -104,7 +109,7 @@
       shell: nohup /opt/{{TOMCAT_DIR}}/bin/startup.sh
 
 - name: Setup Web Server 
-  hosts: all
+  hosts: APPNODES
   become: yes
   tags: WEB
   tasks:

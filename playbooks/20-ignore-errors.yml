@@ -1,0 +1,12 @@
+- name: Demo on ignore_errors
+  hosts: all
+  become: yes
+  tasks:
+    - name: Check tomcat is running or not.
+      shell: ps -ef | grep java | grep -v grep 
+      register: out
+      ignore_errors: yes
+      
+    - name: Start tomcat if not running
+      shell: "/bin/true"
+      when: out.rc != 0

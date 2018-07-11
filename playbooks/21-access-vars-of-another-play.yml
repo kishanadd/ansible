@@ -12,6 +12,6 @@
   tasks: 
     - debug: 
         #msg: "{{hostvars[groups['DBNODES'][0]]['DBIP']}}"
-        msg: "{{hostvars[item]['DBIP']}}"
+        msg: "{{hostvars[item]['ansible_hostname']}}"
       with_items: "{{ groups['DBNODES'] }}"
 

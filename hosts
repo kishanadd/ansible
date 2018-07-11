@@ -4,3 +4,6 @@ dbnode
 [APPNODES]
 appnode1
 appnode2
+
+[PROXY]
+104.196.97.128

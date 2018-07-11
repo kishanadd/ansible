@@ -149,5 +149,26 @@
         state: restarted
         enabled: yes
 
+- name: Setup HAProxy Server 
+  hosts: PROXY
+  become: yes
+  tags: PROXY
+  tasks:
+    - name: Install haproxy Server 
+      package:
+        name: haproxy
+        state: installed
+      
+    - name: Copy haproxy node.
+      copy:
+        src: haproxy.cfg
+        dest: /etc/haproxy/haproxy.cfg
+
+    - name: Add app nodes to haproxy config.
+      lineinfile:
+        path: /etc/haproxy/haproxy.cfg 
+        insertbefore: '#ENDOFCONFIG'
+        line: "  server  {{hostvars[item]['ansible_hostname']}} {{hostvars[item]['facter_ipaddress']}}:80 check"
+      with_items: "{{ groups['APPNODES'] }}"
 
       
